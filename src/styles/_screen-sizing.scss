@@ -88,7 +88,6 @@
 
     #nav-container {
         margin-top: 3rem;
-
         width: 100vw;
         height: 100%;
 
@@ -150,6 +149,7 @@
         background-color: $light-background-color;
         height: 5vh;
         width: 100vw;
+        box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.438);
 
         &.active {
             background-color: transparent;
@@ -161,7 +161,7 @@
             display: inline-block;
             position: fixed;
             z-index: 1;
-            top: 10px;
+            top: 5px;
             left: 10px;
         }
 

@@ -18,7 +18,9 @@ html {
     background: linear-gradient(45deg, rgba(44, 44, 56, 1) 0%, #534f8877 56%);
     background-attachment: fixed;
     flex-shrink: 0;
-    // overflow: hidden;
+    min-width: 100vw;
+    width: max-content;
+
 }
 
 footer {
@@ -35,4 +37,5 @@ footer {
     display: flex;
     flex-direction: column;
     overflow-y: hidden;
+    @include fancy-scroll;
 }

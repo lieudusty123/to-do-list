@@ -13,15 +13,15 @@ export default function TasksLists(props) {
     let mappedTasks = Object.keys(props.currentTaskList)
         .map((taskUl, index) => {
             let list = Object.keys(props.currentTaskList[taskUl]).map((i, index) =>
-                <li key={index} id={index} className="tasks-li" >
+                <li key={index} id={index} className="tasks-li" onClick={props.handleCurrentTask}>
                     <div className="tasks-li-div">
                         {<div className="tasks-li-color" style={props.currentTaskList[taskUl][i].color ? { backgroundColor: `${props.currentTaskList[taskUl][i].color}` } : { backgroundColor: `transparent` }}></div>}
                         <div className="tasks-li-div-text">{props.currentTaskList[taskUl][i].text}</div>
                         {props.currentTaskList[taskUl][i].date && <div className="tasks-li-div-date">{props.currentTaskList[taskUl][i].date}</div>}
                     </div>
-                    {!editListMode && <button className="edit-task-button" onClick={props.handleCurrentTask}>
-                        <img className="edit-task-image" src={editButtonImage} alt="edit" />
-                    </button>}
+                    {/* {!editListMode && <button className="edit-task-button" onClick={props.handleCurrentTask}> */}
+                    {/* <img className="edit-task-image" src={editButtonImage} alt="edit" /> */}
+                    {/* </button>} */}
                     {
                         editListMode && <button className="move-task-button draggable" draggable={true} >
                             <img

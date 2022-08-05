@@ -30,7 +30,7 @@ export default function App(props) {
   function addTask(eve) {
     const passedData = eve.target.parentElement.children[0].value
     const targetUl = eve.target.parentElement.parentElement.parentElement.children[0].children[0].textContent
-    console.log(Object.keys(currentBoard[Object.keys(currentBoard)[0]][targetUl]).length + 1)
+
     if (passedData !== "") {
       setBoardsData(oldBoardData => ({
         boards: {
@@ -207,7 +207,7 @@ export default function App(props) {
     }))
     abortChanges()
   }
-  console.log('boardsData', boardsData)
+
   return (
     <div id="react-container">
       {clicked && <TasksEdits taskItem={clicked} handleAbort={abortChanges} pushChanges={handleChanges} deleteItem={deleteTask} />}

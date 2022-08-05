@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 
 export default function TasksEdits(props) {
 
@@ -24,10 +24,13 @@ export default function TasksEdits(props) {
     function handleSubmit(event) {
         event.preventDefault()
     }
-    // console.log(pushChangesData)
+
     let mappedItems = (
         <form onSubmit={(event) => props.pushChanges(pushChangesData) & handleSubmit(event)}>
-            <h1>{props.taskItem[Object.keys(props.taskItem)[0]].text}</h1>
+            <div className="edit-task-form-header">
+                <h1>{props.taskItem[Object.keys(props.taskItem)[0]].text}</h1>
+                <button type="button" id="x-button" onClick={props.handleAbort}>X</button>
+            </div>
 
             <div>Title</div>
             <input type="text" name="text" value={changeData.text} onChange={saveInput}></input>
@@ -50,7 +53,6 @@ export default function TasksEdits(props) {
     return (
         <div id="edit-task-wrapper">
             {mappedItems}
-            <button onClick={props.handleAbort}>X</button>
         </div>
     );
 }
