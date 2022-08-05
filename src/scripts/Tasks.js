@@ -29,7 +29,7 @@ export default function Tasks(props) {
         <div id="task-container">
             {mappedItems}
             <form className="new-column" onSubmit={(event) => props.addTaskList(textInput) & handleSubmit(event)}>
-                <input className="new-column-input" type="text" onChange={onTaskListChange} value={textInput} placeholder="+ New Column" />
+                <input className="new-column-input" type="text" onChange={onTaskListChange} value={textInput} placeholder="+ New List" />
             </form>
         </div>
     )

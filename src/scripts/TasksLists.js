@@ -1,6 +1,7 @@
 import React from "react";
 import editButtonImage from "../sprites/editButton.png";
-import xButtonImage from "../sprites/x.webp"
+import reorder from "../sprites/reorder.png"
+import xButtonImage from "../sprites/x.png"
 import dragButton from "../sprites/hamburger.png"
 
 
@@ -16,7 +17,7 @@ export default function TasksLists(props) {
                     <div className="tasks-li-div">
                         {<div className="tasks-li-color" style={props.currentTaskList[taskUl][i].color ? { backgroundColor: `${props.currentTaskList[taskUl][i].color}` } : { backgroundColor: `transparent` }}></div>}
                         <div className="tasks-li-div-text">{props.currentTaskList[taskUl][i].text}</div>
-                        {props.currentTaskList[taskUl][i].date && <div className="tasks-li-div-text">{props.currentTaskList[taskUl][i].date}</div>}
+                        {props.currentTaskList[taskUl][i].date && <div className="tasks-li-div-date">{props.currentTaskList[taskUl][i].date}</div>}
                     </div>
                     {!editListMode && <button className="edit-task-button" onClick={props.handleCurrentTask}>
                         <img className="edit-task-image" src={editButtonImage} alt="edit" />
@@ -39,7 +40,7 @@ export default function TasksLists(props) {
                     <div className="list-header">
                         <div>{taskUl}</div>
                         <button className="edit-list-button" onClick={switchEditListModeState}>
-                            <img className="edit-list-image" alt="edit" src={editListMode ? xButtonImage : editButtonImage} />
+                            <img className="edit-list-image" alt="edit" src={editListMode ? xButtonImage : reorder} />
                         </button>
                     </div>
                     <div className="list-body">

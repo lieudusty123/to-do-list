@@ -1,5 +1,6 @@
 import React, { useEffect } from "react"
 import Boards from "./Boards"
+import Footer from "./Footer"
 import Nav from "./Nav"
 import Tasks from "./Tasks"
 import TasksEdits from "./TasksEdits"
@@ -29,6 +30,7 @@ export default function App(props) {
   function addTask(eve) {
     const passedData = eve.target.parentElement.children[0].value
     const targetUl = eve.target.parentElement.parentElement.parentElement.children[0].children[0].textContent
+    console.log(Object.keys(currentBoard[Object.keys(currentBoard)[0]][targetUl]).length + 1)
     if (passedData !== "") {
       setBoardsData(oldBoardData => ({
         boards: {
@@ -69,10 +71,15 @@ export default function App(props) {
   let [currentBoard, setCurrentBoard] = React.useState()
   function currentBoardFunction(event) {
     sampleText = `${event.target.textContent}`
-    setCurrentBoard(() => ({
-      [sampleText]: boardsData.boards[`${sampleText}`]
-    }))
+
+    if (!currentBoard || Object.keys(currentBoard)[0] !== sampleText) {
+      setCurrentBoard(() => ({
+        [sampleText]: boardsData.boards[`${sampleText}`]
+      }))
+    }
+
     if (hamburger === true) {
+      document.querySelector('#hamburger-wrapper').classList.remove('active')
       document.querySelector('#hamburger').classList.remove('active')
       document.querySelector('.boards-ul').classList.remove('active')
       document.querySelector('#nav-container').classList.remove('active')
@@ -85,6 +92,7 @@ export default function App(props) {
     if (sampleText) {
       setCurrentBoard(() => ({ [sampleText]: boardsData.boards[`${sampleText}`] }))
     }
+    abortChanges()
   }, [boardsData])
 
   const [clicked, setClicked] = React.useState()
@@ -123,11 +131,13 @@ export default function App(props) {
               text: insertedValues.text,
               color: insertedValues.color,
               date: insertedValues.date,
+              desc: insertedValues.desc
             }
           }
         }
       }
     }))
+
   }
 
   function pushNewTaskData(obj) {
@@ -149,9 +159,11 @@ export default function App(props) {
   function abortChanges() {
     setClicked(false)
   }
-  function handleHamburgerClick(event) {
+
+  function handleHamburgerClick() {
     if (window.innerWidth >= 600) {
 
+      document.querySelector('#hamburger-wrapper').classList.remove('active')
       document.querySelector('#hamburger').classList.remove('active')
       document.querySelector('.boards-ul').classList.remove('active')
       document.querySelector('#nav-container').classList.remove('active')
@@ -159,28 +171,59 @@ export default function App(props) {
       setHamburger(false)
     }
     else {
+      document.querySelector('#hamburger-wrapper').classList.toggle('active')
       document.querySelector('#hamburger').classList.toggle('active')
       document.querySelector('.boards-ul').classList.toggle('active')
       document.querySelector('#nav-container').classList.toggle('active')
       document.querySelector('#boards-nav').classList.toggle('active')
       setHamburger(!hamburger)
     }
-
   }
 
+  function deleteTask() {
+    let newData = { ...boardsData }
+    delete newData.boards[Object.keys(currentBoard)][currentList][+Object.keys(clicked) + 1]
+    let newInnerData = {}
+    let index = 0;
+    for (const key in newData.boards[Object.keys(currentBoard)][currentList]) {
+      index += 1
+      newInnerData = {
+        ...newInnerData,
+        [index]: {
+          ...newData.boards[Object.keys(currentBoard)][currentList][key]
+        }
+      }
+    }
+    setBoardsData(({
+      boards: {
+        ...newData.boards,
+        [Object.keys(currentBoard)]: {
+          ...currentBoard[Object.keys(currentBoard)],
+          [currentList]: {
+            ...newInnerData
+          }
+        }
+      }
+    }))
+    abortChanges()
+  }
+  console.log('boardsData', boardsData)
   return (
     <div id="react-container">
-      {clicked && <TasksEdits taskItem={clicked} handleAbort={abortChanges} pushChanges={handleChanges} />}
+      {clicked && <TasksEdits taskItem={clicked} handleAbort={abortChanges} pushChanges={handleChanges} deleteItem={deleteTask} />}
       <nav id="boards-nav">
         <div id="nav-container">
           <Nav boards={boardsData.boards} handleClick={currentBoardFunction} />
           <Boards handleEvent={addBoard} />
         </div>
+        <Footer />
       </nav>
-      <div id="hamburger" onClick={handleHamburgerClick}>
-        <span className="bar"></span>
-        <span className="bar"></span>
-        <span className="bar"></span>
+      <div id="hamburger-wrapper">
+        <div id="hamburger" onClick={handleHamburgerClick}>
+          <span className="bar"></span>
+          <span className="bar"></span>
+          <span className="bar"></span>
+        </div>
       </div>
       {hamburger === false && currentBoard && <main id="tasks-display-container">
         <Tasks

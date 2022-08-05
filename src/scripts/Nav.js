@@ -14,7 +14,7 @@ export default function Nav(props) {
 
         <div id="boards">
             <ul className="boards-ul">
-                <div id="boards-counter">All Boards: {mappedBoards.length}</div>
+                <div id="boards-counter">You have ({mappedBoards.length}) boards </div>
                 {mappedBoards}
             </ul>
         </div>
