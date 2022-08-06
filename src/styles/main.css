@@ -423,7 +423,7 @@ html {
   -webkit-box-direction: normal;
       -ms-flex-direction: row;
           flex-direction: row;
-  overflow: auto;
+  overflow: hidden;
 }
 
 #task-container ul .list-body .tasks-li .tasks-li-div .tasks-li-color {
