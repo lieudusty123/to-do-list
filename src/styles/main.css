@@ -247,7 +247,7 @@ input {
   color: white;
   border: none;
   border-radius: .8rem;
-  width: 10rem;
+  width: 75%;
   height: 3rem;
   font-size: 1.3rem;
   font-weight: 500;
@@ -359,20 +359,19 @@ html {
           justify-content: space-between;
 }
 
-#task-container ul .list-header .edit-list-button {
-  width: 20%;
-  background-color: transparent;
-  border: none;
+#task-container ul .list-header .trash-icon {
+  width: 8%;
+  -webkit-filter: invert(1);
+          filter: invert(1);
 }
 
-#task-container ul .list-header .edit-list-button:hover {
+#task-container ul .list-header .trash-icon:hover {
   cursor: pointer;
 }
 
-#task-container ul .list-header .edit-list-button .edit-list-image {
-  width: 30px;
-  -webkit-filter: invert(100%) brightness(100%);
-          filter: invert(100%) brightness(100%);
+#task-container ul .list-header div {
+  font-weight: 500;
+  font-size: 1.2rem;
 }
 
 #task-container ul .list-body {
@@ -814,6 +813,50 @@ html {
   #tasks-display-container #task-container .new-column-input {
     font-size: 1.3rem;
   }
+  #tasks-display-container #task-container #info-section {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    width: 7%;
+  }
+  #tasks-display-container #task-container #info-section #info-wrapper {
+    -webkit-animation: open-small-screen .5s ease-in-out;
+            animation: open-small-screen .5s ease-in-out;
+    top: .8rem;
+    right: 36vw;
+    max-width: 40vw;
+    max-height: 7rem;
+  }
+  @-webkit-keyframes open-small-screen {
+    0% {
+      right: 6vw;
+      width: 10vw;
+      opacity: 0;
+    }
+    50% {
+      opacity: 30%;
+    }
+    100% {
+      opacity: 100%;
+      right: 36vw;
+      width: 40vw;
+    }
+  }
+  @keyframes open-small-screen {
+    0% {
+      right: 6vw;
+      width: 10vw;
+      opacity: 0;
+    }
+    50% {
+      opacity: 30%;
+    }
+    100% {
+      opacity: 100%;
+      right: 36vw;
+      width: 40vw;
+    }
+  }
   #root {
     overflow-x: hidden;
     display: -webkit-box;
@@ -923,16 +966,6 @@ html {
   footer {
     display: none;
   }
-  #info-section {
-    position: absolute;
-    top: 5px;
-    right: 5px;
-    width: 7%;
-  }
-  #info-section #info-wrapper {
-    top: 3rem;
-    right: 2rem;
-  }
 }
 
 @media screen and (min-width: 600px) {
@@ -951,23 +984,45 @@ html {
     overflow-y: auto;
   }
   #info-section {
-    width: 3rem;
-    position: relative;
-    top: -50px;
+    position: absolute;
+    top: 95vh;
+    left: 240px;
   }
   #info-section #info-wrapper {
+    -webkit-animation: open-big-screen .5s ease-in-out;
+            animation: open-big-screen .5s ease-in-out;
     right: 1rem;
+    top: -145px;
+    left: 10px;
+    max-width: 20rem;
+    max-height: 6rem;
   }
-}
-
-#info-section {
-  position: absolute;
-  top: 94vh;
-  left: 240px;
-}
-
-#info-section:hover {
-  cursor: pointer;
+  @-webkit-keyframes open-big-screen {
+    0% {
+      width: 10vw;
+      opacity: 0;
+    }
+    50% {
+      opacity: 30%;
+    }
+    100% {
+      opacity: 100%;
+      width: 100%;
+    }
+  }
+  @keyframes open-big-screen {
+    0% {
+      width: 10vw;
+      opacity: 0;
+    }
+    50% {
+      opacity: 30%;
+    }
+    100% {
+      opacity: 100%;
+      width: 100%;
+    }
+  }
 }
 
 #info-section #info-image {
@@ -976,52 +1031,24 @@ html {
           filter: invert(1);
 }
 
+#info-section #info-image:hover {
+  cursor: pointer;
+}
+
 #info-section #info-wrapper {
+  overflow: hidden;
   position: relative;
   margin-bottom: -100px;
-  -webkit-animation: example .5s ease-in-out;
-          animation: example .5s ease-in-out;
   min-width: 10vw;
   width: -webkit-max-content;
   width: -moz-max-content;
   width: max-content;
-  max-width: 30vw;
-  max-height: 6rem;
-  overflow: hidden;
   padding: 1rem;
   border-radius: 10px;
   background-color: #2c2c38;
   font-weight: 400;
-  top: -145px;
-  left: 10px;
-}
-
-@-webkit-keyframes example {
-  0% {
-    width: 10vw;
-    opacity: 0;
-  }
-  50% {
-    opacity: 30%;
-  }
-  100% {
-    opacity: 100%;
-    width: 30vw;
-  }
-}
-
-@keyframes example {
-  0% {
-    width: 10vw;
-    opacity: 0;
-  }
-  50% {
-    opacity: 30%;
-  }
-  100% {
-    opacity: 100%;
-    width: 30vw;
-  }
+  -webkit-box-shadow: 0 5px 5px 1px rgba(0, 0, 0, 0.541);
+          box-shadow: 0 5px 5px 1px rgba(0, 0, 0, 0.541);
 }
 
 html {

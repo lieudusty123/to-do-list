@@ -22,7 +22,17 @@ export default function Tasks(props) {
     let index = 0
     for (const key in objectKeys) {
         let currentObj = { [key]: objectKeys[key] }
-        mappedItems.push(<TasksLists addTask={(event) => props.addTask(event)} key={key} idi={index} pushNewTaskData={(data) => props.pushNewTaskData(data)} currentTaskList={currentObj} handleCurrentTask={props.handleCurrentTask} />)
+        mappedItems.push(
+            <TasksLists
+                addTask={(event) => props.addTask(event)}
+                deleteItem={(event) => props.deleteItem(event)}
+                key={key}
+                idi={index}
+                pushNewTaskData={(data) => props.pushNewTaskData(data)}
+                currentTaskList={currentObj}
+                handleCurrentTask={props.handleCurrentTask} />)
+
+
         index++
     }
 

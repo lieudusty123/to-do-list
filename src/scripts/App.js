@@ -207,6 +207,14 @@ export default function App(props) {
     }))
     abortChanges()
   }
+  function deleteTaskList(event) {
+    let newData = { ...boardsData }
+    let passedListId = event.target.parentElement.children[0].textContent
+    delete newData.boards[Object.keys(currentBoard)][passedListId]
+    setBoardsData(({
+      ...newData
+    }))
+  }
 
   return (
     <div id="react-container">
@@ -232,6 +240,7 @@ export default function App(props) {
           addTaskList={addTaskList}
           handleCurrentTask={flipClickState}
           pushNewTaskData={pushNewTaskData}
+          deleteItem={deleteTaskList}
         />
       </main>}
 

@@ -1,49 +1,26 @@
 #info-section {
-    position: absolute;
-    top: 94vh;
-    left: 240px;
-
-
-    &:hover {
-        cursor: pointer;
-    }
 
     #info-image {
         width: 2.5rem;
         filter: invert(1);
+
+        &:hover {
+            cursor: pointer;
+        }
     }
 
     #info-wrapper {
+        overflow: hidden;
         position: relative;
         margin-bottom: -100px;
-        animation: example .5s ease-in-out;
         min-width: 10vw;
         width: max-content;
-        max-width: 30vw;
-        max-height: 6rem;
-        overflow: hidden;
         padding: 1rem;
         border-radius: 10px;
         background-color: $light-background-color;
         font-weight: 400;
-        top: -145px;
-        left: 10px;
+        box-shadow: 0 5px 5px 1px rgba(0, 0, 0, 0.541);
     }
 
-    @keyframes example {
-        0% {
-            width: 10vw;
-            opacity: 0;
-        }
 
-        50% {
-            opacity: 30%;
-        }
-
-        100% {
-            opacity: 100%;
-
-            width: 30vw;
-        }
-    }
 }

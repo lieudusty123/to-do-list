@@ -10,7 +10,7 @@ export default function Info() {
                 <div id="info-wrapper">
                     <div>Click on a task to edit it.</div>
                     <br />
-                    <div>You can re-order tasks by dragging and dropping a task.</div>
+                    <div>You can re-order tasks by dragging and dropping it.</div>
                 </div>
             }
 

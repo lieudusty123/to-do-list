@@ -1,5 +1,5 @@
 import React from "react";
-
+import trashIcon from "../sprites/trash.png"
 
 export default function TasksLists(props) {
     const [taskValue, setTaskValue] = React.useState({ text: "" })
@@ -29,6 +29,11 @@ export default function TasksLists(props) {
                 <ul key={index} id={props.idi}>
                     <div className="list-header">
                         <div>{taskUl}</div>
+                        <img
+                            className="trash-icon"
+                            src={trashIcon}
+                            onClick={(event) => props.deleteItem(event)}
+                        />
                     </div>
                     <div className="list-body">
                         {list}
@@ -46,6 +51,7 @@ export default function TasksLists(props) {
                 </ul>
             )
         })
+
 
     function onNewTaskChange(event) {
         setTaskValue({ text: `${event.target.value}` })
