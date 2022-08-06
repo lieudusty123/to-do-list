@@ -30,6 +30,7 @@ export default function TasksLists(props) {
                     <div className="list-header">
                         <div>{taskUl}</div>
                         <img
+                            alt="trash"
                             className="trash-icon"
                             src={trashIcon}
                             onClick={(event) => props.deleteItem(event)}
