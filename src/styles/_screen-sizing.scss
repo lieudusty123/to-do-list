@@ -17,21 +17,27 @@
         align-items: flex-start;
         padding: 0;
         margin: 0;
+        margin-bottom: 2rem;
         overflow: hidden;
-        width: 100vw;
+        width: 100%;
+        height: 100%;
+        max-height: calc(100vh - 3rem);
+        min-height: 92vh;
+        margin-top: 3rem;
 
         #task-container {
+            height: 100%;
             width: 100vw;
-            height: 100vh;
             display: flex;
             align-items: center;
             flex-direction: column;
             overflow-y: auto;
             overflow-x: hidden;
-            margin-bottom: 4rem;
+            margin-left: 0;
+            margin-bottom: 3rem;
 
             ul {
-                margin-top: 5rem;
+                margin-top: 2rem;
 
                 .list-footer {
                     width: 100%;
@@ -53,12 +59,15 @@
 
 
             .new-column {
-                height: 3rem;
-                margin-top: 2rem;
+                position: relative;
+                top: 2rem;
 
                 &-input {
+                    margin-bottom: 3rem;
                     font-size: 1.3rem;
+                    height: 3rem;
                 }
+
             }
 
             #info-section {
@@ -170,7 +179,9 @@
 
     #hamburger-wrapper {
         background-color: $light-background-color;
-        height: 5vh;
+        position: absolute;
+        top: 0;
+        height: 3rem;
         width: 100vw;
         box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.438);
 
@@ -184,7 +195,7 @@
             display: inline-block;
             position: fixed;
             z-index: 1;
-            top: 5px;
+            top: 10px;
             left: 10px;
         }
 
@@ -236,7 +247,7 @@
 
     #info-section {
         position: absolute;
-        top: 95vh;
+        bottom: 24px;
         left: 240px;
 
         #info-wrapper {
