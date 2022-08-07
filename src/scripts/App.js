@@ -4,6 +4,7 @@ import Footer from "./Footer"
 import Nav from "./Nav"
 import Tasks from "./Tasks"
 import TasksEdits from "./TasksEdits"
+import Info from "./Info"
 
 let sampleText = ''
 export default function App(props) {
@@ -16,7 +17,25 @@ export default function App(props) {
   })
 
   function addBoard(eve) {
-    if (eve.target.value !== "") {
+    const str = eve.target.value
+    let spaceCount = 0
+    for (let index = 0; index < str.length; index++) {
+      if (index > 0) {
+        if (str[index] === " " && str[index - 1] === " ") {
+          spaceCount++
+        }
+        else {
+          spaceCount = 0
+        }
+      }
+      else {
+        if (str[index] === " ") {
+          spaceCount++
+        }
+      }
+
+    }
+    if (eve.target.value !== "" && spaceCount < 1) {
       setBoardsData(oldData => ({
         boards: {
           ...oldData.boards,
@@ -30,8 +49,24 @@ export default function App(props) {
   function addTask(eve) {
     const passedData = eve.target.parentElement.children[0].value
     const targetUl = eve.target.parentElement.parentElement.parentElement.children[0].children[0].textContent
+    let spaceCount = 0
+    for (let index = 0; index < passedData.length; index++) {
+      if (index > 0) {
+        if (passedData[index] === " " && passedData[index - 1] === " ") {
+          spaceCount++
+        }
+        else {
+          spaceCount = 0
+        }
+      }
+      else {
+        if (passedData[index] === " ") {
+          spaceCount++
+        }
+      }
 
-    if (passedData !== "") {
+    }
+    if (passedData !== "" && spaceCount < 1) {
       setBoardsData(oldBoardData => ({
         boards: {
           ...oldBoardData.boards,
@@ -50,17 +85,30 @@ export default function App(props) {
   }
 
   function addTaskList(passedData) {
-    if (passedData) {
+    let spaceCount = 0
+    for (let index = 0; index < passedData.length; index++) {
+      if (index > 0) {
+        if (passedData[index] === " " && passedData[index - 1] === " ") {
+          spaceCount++
+        }
+        else {
+          spaceCount = 0
+        }
+      }
+      else {
+        if (passedData[index] === " ") {
+          spaceCount++
+        }
+      }
+
+    }
+    if (passedData && spaceCount < 1) {
       setBoardsData(oldBoardData => ({
         boards: {
           ...oldBoardData.boards,
           [Object.keys(currentBoard)]: {
             ...currentBoard[Object.keys(currentBoard)],
             [passedData]: {
-              1: {
-                text: `${Math.floor(Math.random() * 10)}`,
-                color: "#ffffff"
-              }
             }
           }
         }
@@ -242,6 +290,8 @@ export default function App(props) {
           pushNewTaskData={pushNewTaskData}
           deleteItem={deleteTaskList}
         />
+        <Info />
+
       </main>}
 
     </div>

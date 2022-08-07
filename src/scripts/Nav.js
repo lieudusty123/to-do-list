@@ -17,6 +17,7 @@ export default function Nav(props) {
                 {mappedBoards.length !== 0 && <div id="boards-counter">You have ({mappedBoards.length}) board{mappedBoards.length === 1 ? "" : "s"} </div>}
                 {mappedBoards}
             </ul>
+
         </div>
     )
 }
