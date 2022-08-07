@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import TasksLists from "./TasksLists";
-import Info from "./Info";
 
 export default function Tasks(props) {
     const [textInput, setTextInput] = useState('')
