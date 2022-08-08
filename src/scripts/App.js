@@ -35,7 +35,13 @@ export default function App(props) {
       }
 
     }
-    if (eve.target.value !== "" && spaceCount < 1) {
+    let sameName = false;
+    for (const key in boardsData.boards) {
+      if (key === str) {
+        sameName = true
+      }
+    }
+    if (eve.target.value !== "" && spaceCount < 1 && !sameName) {
       setBoardsData(oldData => ({
         boards: {
           ...oldData.boards,
@@ -66,6 +72,7 @@ export default function App(props) {
       }
 
     }
+
     if (passedData !== "" && spaceCount < 1) {
       setBoardsData(oldBoardData => ({
         boards: {
@@ -102,7 +109,16 @@ export default function App(props) {
       }
 
     }
-    if (passedData && spaceCount < 1) {
+    let sameName = false;
+    for (const key in currentBoard) {
+      for (const inner in currentBoard[key]) {
+        console.log(inner)
+        if (inner === passedData) {
+          sameName = true
+        }
+      }
+    }
+    if (passedData && spaceCount < 1 && !sameName) {
       setBoardsData(oldBoardData => ({
         boards: {
           ...oldBoardData.boards,
