@@ -112,7 +112,6 @@ export default function App(props) {
     let sameName = false;
     for (const key in currentBoard) {
       for (const inner in currentBoard[key]) {
-        console.log(inner)
         if (inner === passedData) {
           sameName = true
         }
