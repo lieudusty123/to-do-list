@@ -34,11 +34,13 @@ export default function Tasks(props) {
 
         index++
     }
-
+    function blurElement(event) {
+        event.target.children[0].blur()
+    }
     return (
         <div id="task-container">
             {mappedItems}
-            <form className="new-column" onSubmit={(event) => props.addTaskList(textInput) & handleSubmit(event)}>
+            <form className="new-column" onSubmit={(event) => props.addTaskList(textInput) & handleSubmit(event) & blurElement(event)}>
                 <input className="new-column-input" type="text" onChange={onTaskListChange} value={textInput} placeholder="+ New List" />
             </form>
         </div>

@@ -543,7 +543,7 @@ html {
   transition: box-shadow .1s, -webkit-box-shadow .1s;
 }
 
-#task-container .new-column .new-column-input:hover {
+focus #task-container .new-column .new-column-input:hover {
   -webkit-transition: -webkit-box-shadow .1s;
   transition: -webkit-box-shadow .1s;
   transition: box-shadow .1s;
@@ -773,7 +773,7 @@ html {
     position: absolute;
     z-index: 2;
     top: 0.3rem;
-    right: .5rem;
+    right: 1.5rem;
     width: 7%;
   }
   #tasks-display-container #info-section #info-wrapper {
@@ -903,9 +903,15 @@ html {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
     -webkit-box-pack: center;
         -ms-flex-pack: center;
             justify-content: center;
+    background: url(../sprites/mountains.png);
+    background-position: top;
   }
   #boards {
     max-height: 80vh;
@@ -914,8 +920,7 @@ html {
   }
   #nav-container {
     margin-top: 3rem;
-    width: 100vw;
-    height: 100%;
+    height: 80% !important;
   }
   #nav-container form #add-board-input {
     margin-top: 1rem;
@@ -931,7 +936,7 @@ html {
     display: none;
     z-index: 1;
     background: #2c2c38;
-    background: linear-gradient(45deg, #2c2c38 0%, #534f8877 96%);
+    background: linear-gradient(45deg, #2c2c38 0%, #534f88 96%);
   }
   #boards-nav.active {
     display: block;
@@ -995,18 +1000,6 @@ html {
     -webkit-transform: translateY(8px) rotate(-45deg);
             transform: translateY(8px) rotate(-45deg);
   }
-  #root {
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-orient: vertical;
-    -webkit-box-direction: normal;
-        -ms-flex-direction: column;
-            flex-direction: column;
-    -webkit-box-pack: justify;
-        -ms-flex-pack: justify;
-            justify-content: space-between;
-  }
   footer {
     display: none;
   }
@@ -1018,6 +1011,9 @@ html {
   }
   .boards-li {
     width: 85%;
+  }
+  #react-container {
+    background-image: url(../sprites/mountains.png);
   }
   #task-container ul {
     height: -webkit-fit-content;
@@ -1159,9 +1155,6 @@ html::-webkit-scrollbar-thumb:hover {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  background: #2c2c38;
-  background: linear-gradient(45deg, #2c2c38 0%, #534f8877 56%);
-  background-attachment: fixed;
   -ms-flex-negative: 0;
       flex-shrink: 0;
   min-width: 100vw;

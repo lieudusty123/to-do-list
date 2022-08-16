@@ -29,7 +29,7 @@
             position: absolute;
             z-index: 2;
             top: 0.3rem;
-            right: .5rem;
+            right: 1.5rem;
             width: 7%;
 
             #info-wrapper {
@@ -132,7 +132,10 @@
     #root {
         overflow-x: hidden;
         display: flex;
+        flex-direction: column;
         justify-content: center;
+        background: url(../sprites/mountains.png);
+        background-position: top;
     }
 
     #boards {
@@ -143,8 +146,7 @@
 
     #nav-container {
         margin-top: 3rem;
-        width: 100vw;
-        height: 100%;
+        height: 80% !important;
 
         form {
             #add-board-input {
@@ -166,7 +168,7 @@
         display: none;
         z-index: 1;
         background: rgb(44, 44, 56);
-        background: linear-gradient(45deg, rgba(44, 44, 56, 1) 0%, #534f8877 96%);
+        background: linear-gradient(45deg, rgba(44, 44, 56, 1) 0%, #534f88 96%);
 
         &.active {
             display: block;
@@ -236,12 +238,6 @@
         }
     }
 
-    #root {
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-    }
-
     footer {
         display: none;
     }
@@ -258,6 +254,11 @@
 
     .boards-li {
         width: 85%;
+    }
+
+    #react-container {
+        background-image: url(../sprites/mountains.png);
+
     }
 
     #task-container {

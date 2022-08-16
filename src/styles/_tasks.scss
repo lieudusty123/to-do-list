@@ -191,7 +191,7 @@ html {
             border: 2px solid darken($dark-background-color, $amount: 1);
             transition: box-shadow .1s;
 
-            &:hover {
+            focus &:hover {
                 transition: box-shadow .1s;
                 box-shadow: 0 0 7px darken($dark-background-color, $amount: 3);
             }
