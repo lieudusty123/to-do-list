@@ -16,6 +16,9 @@ export default function TasksLists(props) {
                     onDrop={dragDrop}
                     onDragStart={dragStart}
                     onDragOver={dragOver}
+                    onTouchEnd={dragDrop}
+                    onTouchStart={dragStart}
+                    onTouchMove={dragOver}
                     draggable={true}
                 >
                     <div className="tasks-li-div">
