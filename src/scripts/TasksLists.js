@@ -1,6 +1,7 @@
 import React from "react";
 import trashIcon from "../sprites/trash.png"
 
+
 export default function TasksLists(props) {
     const [taskValue, setTaskValue] = React.useState({ text: "" })
     let passedValue = {}
@@ -16,9 +17,9 @@ export default function TasksLists(props) {
                     onDrop={dragDrop}
                     onDragStart={dragStart}
                     onDragOver={dragOver}
-                    // onTouchEnd={dragDrop}
-                    // onTouchStart={dragStart}
-                    // onTouchMove={dragOver}
+                    onTouchEnd={touchDrop}
+                    onTouchStart={dragStart}
+                    onTouchMove={dragOver}
                     draggable={true}
                 >
                     <div className="tasks-li-div">
@@ -85,7 +86,6 @@ export default function TasksLists(props) {
 
     let dragEndIndex;
     function dragOver(event) {
-        console.log(event.target)
         if (event.target.className === "tasks-li-div") {
             dragEndIndex = +event.target.parentElement.id + 1;
             dragEndList = event.target.parentElement.parentElement.parentElement.children[0].children[0].textContent
@@ -100,11 +100,24 @@ export default function TasksLists(props) {
         }
 
     }
+    function touchDrop(event) {
+        let please = document.elementFromPoint(event.changedTouches[0].pageX, event.changedTouches[0].pageY)
+        if (please.className === "tasks-li-div") {
+            dragEndIndex = +please.parentElement.id + 1;
+            dragEndList = please.parentElement.parentElement.parentElement.children[0].children[0].textContent
+        }
+        else if (please.className === "tasks-li-color" || please.className === "tasks-li-div-text" || please.className === "tasks-li-div-date") {
+            dragEndIndex = +please.parentElement.parentElement.id + 1;
+            dragEndList = please.parentElement.parentElement.parentElement.parentElement.children[0].children[0].textContent
+        }
+        else {
+            dragEndIndex = +please.id + 1;
+            dragEndList = please.parentElement.parentElement.children[0].children[0].textContent
+        }
+        dragDrop()
+    }
     let dragEndList;
     function dragDrop() {
-        console.log(dragStartIndex)
-        console.log(dragEndIndex)
-        console.log(Object.keys(props.currentTaskList)[0])
         if (dragEndList === dragStartList && Object.keys(props.currentTaskList)[0] === dragEndList) {
 
             let firstItem = props.currentTaskList[dragEndList][dragStartIndex]
