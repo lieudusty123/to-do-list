@@ -734,6 +734,10 @@ focus #task-container .new-column .new-column-input:hover {
   ::-webkit-scrollbar-thumb:hover {
     background: #555;
   }
+  html {
+    -ms-touch-action: none;
+        touch-action: none;
+  }
   #react-container {
     overflow-y: hidden;
     display: -webkit-box;
@@ -760,7 +764,6 @@ focus #task-container .new-column .new-column-input:hover {
             align-items: flex-start;
     padding: 0;
     margin: 0;
-    margin-bottom: 2rem;
     overflow: hidden;
     width: 100%;
     height: 100%;
@@ -779,10 +782,10 @@ focus #task-container .new-column .new-column-input:hover {
   #tasks-display-container #info-section #info-wrapper {
     -webkit-animation: open-small-screen .5s ease-in-out;
             animation: open-small-screen .5s ease-in-out;
-    right: 36vw;
+    right: 54vw;
     top: .8rem;
-    max-width: 40vw;
-    max-height: 6rem;
+    width: 60vw;
+    max-height: 10rem;
   }
   #tasks-display-container #info-section #info-wrapper div {
     -webkit-animation: open-small-screen-opacity .5s ease-in-out;
@@ -802,8 +805,8 @@ focus #task-container .new-column .new-column-input:hover {
               transform: scaleY(1);
     }
     100% {
-      right: 36vw;
-      width: 40vw;
+      right: 54vw;
+      width: 60vw;
     }
   }
   @keyframes open-small-screen {
@@ -820,8 +823,8 @@ focus #task-container .new-column .new-column-input:hover {
               transform: scaleY(1);
     }
     100% {
-      right: 36vw;
-      width: 40vw;
+      right: 54vw;
+      width: 60vw;
     }
   }
   @-webkit-keyframes open-small-screen-opacity {
@@ -1009,6 +1012,9 @@ focus #task-container .new-column .new-column-input:hover {
   #hamburger {
     display: none;
   }
+  footer {
+    display: inline-block;
+  }
   .boards-li {
     width: 85%;
   }
@@ -1169,7 +1175,6 @@ footer {
   color: white;
   bottom: 10px;
   padding: 10px;
-  display: inline-block;
 }
 
 #root {

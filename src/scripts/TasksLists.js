@@ -16,9 +16,9 @@ export default function TasksLists(props) {
                     onDrop={dragDrop}
                     onDragStart={dragStart}
                     onDragOver={dragOver}
-                    onTouchEnd={dragDrop}
-                    onTouchStart={dragStart}
-                    onTouchMove={dragOver}
+                    // onTouchEnd={dragDrop}
+                    // onTouchStart={dragStart}
+                    // onTouchMove={dragOver}
                     draggable={true}
                 >
                     <div className="tasks-li-div">
@@ -85,6 +85,7 @@ export default function TasksLists(props) {
 
     let dragEndIndex;
     function dragOver(event) {
+        console.log(event.target)
         if (event.target.className === "tasks-li-div") {
             dragEndIndex = +event.target.parentElement.id + 1;
             dragEndList = event.target.parentElement.parentElement.parentElement.children[0].children[0].textContent
@@ -98,7 +99,6 @@ export default function TasksLists(props) {
             dragEndList = event.target.parentElement.parentElement.children[0].children[0].textContent
         }
 
-        event.preventDefault()
     }
     let dragEndList;
     function dragDrop() {

@@ -2,6 +2,10 @@
 
     @include fancy-scroll;
 
+    html {
+        touch-action: none;
+    }
+
     #react-container {
         overflow-y: hidden;
         display: flex;
@@ -16,7 +20,7 @@
         align-items: flex-start;
         padding: 0;
         margin: 0;
-        margin-bottom: 2rem;
+        // margin-bottom: 2rem;
         overflow: hidden;
         width: 100%;
         height: 100%;
@@ -34,10 +38,10 @@
 
             #info-wrapper {
                 animation: open-small-screen .5s ease-in-out;
-                right: 36vw;
+                right: 54vw;
                 top: .8rem;
-                max-width: 40vw;
-                max-height: 6rem;
+                width: 60vw;
+                max-height: 10rem;
 
                 div {
                     animation: open-small-screen-opacity .5s ease-in-out;
@@ -58,8 +62,9 @@
                 }
 
                 100% {
-                    right: 36vw;
-                    width: 40vw;
+                    right: 54vw;
+                    width: 60vw;
+
                 }
 
             }
@@ -250,6 +255,10 @@
 @media screen and (min-width: 600px) {
     #hamburger {
         display: none;
+    }
+
+    footer {
+        display: inline-block;
     }
 
     .boards-li {
