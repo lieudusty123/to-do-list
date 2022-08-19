@@ -1,10 +1,13 @@
 import React from "react";
+import { useDispatch } from "react-redux";
 import trashIcon from "../sprites/trash.png"
-
+import { addTaskSlice, reOrderSlice } from "./Slice/toDoSlice";
 
 export default function TasksLists(props) {
     const [taskValue, setTaskValue] = React.useState({ text: "" })
     let passedValue = {}
+    // console.log('props.currentTaskList', props.currentTaskList)
+    const dispatch = useDispatch()
 
     let mappedTasks = Object.keys(props.currentTaskList)
         .map((taskUl, index) => {
@@ -47,7 +50,7 @@ export default function TasksLists(props) {
                         <form onSubmit={newTask} className="task-list-form">
                             <input type="text" id={taskUl} onChange={onNewTaskChange}></input>
                             <button
-                                onClick={props.addTask}
+                                onClick={newTask}
                                 value={taskValue.text}>
                                 Add task
                             </button>
@@ -63,7 +66,11 @@ export default function TasksLists(props) {
     }
     function newTask(event) {
         event.preventDefault()
-        event.target.children[0].value = ''
+        dispatch(addTaskSlice({
+            currentList: props.currentTaskList,
+            text: taskValue.text
+        }))
+        event.target.parentElement.children[0].value = ''
         setTaskValue({ text: "" })
     }
     let dragStartIndex;
@@ -129,7 +136,7 @@ export default function TasksLists(props) {
                     [dragEndIndex]: firstItem
                 }
             }
-            return props.pushNewTaskData(passedValue)
+            return dispatch(reOrderSlice(passedValue))
         }
         else {
             dragEndIndex = undefined;

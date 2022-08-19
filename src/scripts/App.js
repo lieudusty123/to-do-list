@@ -5,9 +5,12 @@ import Nav from "./Nav"
 import Tasks from "./Tasks"
 import TasksEdits from "./TasksEdits"
 import Info from "./Info"
+import { useSelector } from 'react-redux'
 
 let sampleText = ''
 export default function App(props) {
+  const pleaseWork = useSelector(state => state.toDo)
+  let [currentBoard, setCurrentBoard] = React.useState()
   const [hamburger, setHamburger] = React.useState(false)
 
   const [boardsData, setBoardsData] = React.useState({
@@ -16,147 +19,12 @@ export default function App(props) {
     }
   })
 
-  function addBoard(eve) {
-    const str = eve.target.value
-    let spaceCount = 0
-    for (let index = 0; index < str.length; index++) {
-      if (index > 0) {
-        if (str[index] === " " && str[index - 1] === " ") {
-          spaceCount++
-        }
-        else {
-          spaceCount = 0
-        }
-      }
-      else {
-        if (str[index] === " ") {
-          spaceCount++
-        }
-      }
-
-    }
-    let sameName = false;
-    for (const key in boardsData.boards) {
-      if (key === str) {
-        sameName = true
-      }
-    }
-    if (eve.target.value !== "" && spaceCount < 1 && !sameName) {
-      setBoardsData(oldData => ({
-        boards: {
-          ...oldData.boards,
-          [eve.target.value]: {
-          }
-        }
-      }))
-    }
-  }
-
-  function addTask(eve) {
-    const passedData = eve.target.parentElement.children[0].value
-    const targetUl = eve.target.parentElement.parentElement.parentElement.children[0].children[0].textContent
-    let spaceCount = 0
-    for (let index = 0; index < passedData.length; index++) {
-      if (index > 0) {
-        if (passedData[index] === " " && passedData[index - 1] === " ") {
-          spaceCount++
-        }
-        else {
-          spaceCount = 0
-        }
-      }
-      else {
-        if (passedData[index] === " ") {
-          spaceCount++
-        }
-      }
-
-    }
-
-    if (passedData !== "" && spaceCount < 1) {
-      setBoardsData(oldBoardData => ({
-        boards: {
-          ...oldBoardData.boards,
-          [Object.keys(currentBoard)]: {
-            ...currentBoard[Object.keys(currentBoard)[0]],
-            [targetUl]: {
-              ...currentBoard[Object.keys(currentBoard)[0]][targetUl],
-              [`${Object.keys(currentBoard[Object.keys(currentBoard)[0]][targetUl]).length + 1}`]: {
-                text: passedData
-              }
-            }
-          }
-        }
-      }))
-    }
-  }
-
-  function addTaskList(passedData) {
-    let spaceCount = 0
-    for (let index = 0; index < passedData.length; index++) {
-      if (index > 0) {
-        if (passedData[index] === " " && passedData[index - 1] === " ") {
-          spaceCount++
-        }
-        else {
-          spaceCount = 0
-        }
-      }
-      else {
-        if (passedData[index] === " ") {
-          spaceCount++
-        }
-      }
-
-    }
-    let sameName = false;
-    for (const key in currentBoard) {
-      for (const inner in currentBoard[key]) {
-        if (inner === passedData) {
-          sameName = true
-        }
-      }
-    }
-    if (passedData && spaceCount < 1 && !sameName) {
-      setBoardsData(oldBoardData => ({
-        boards: {
-          ...oldBoardData.boards,
-          [Object.keys(currentBoard)]: {
-            ...currentBoard[Object.keys(currentBoard)],
-            [passedData]: {
-            }
-          }
-        }
-      }))
-    }
-  }
-
-  let [currentBoard, setCurrentBoard] = React.useState()
-  function currentBoardFunction(event) {
-    sampleText = `${event.target.textContent}`
-
-    if (!currentBoard || Object.keys(currentBoard)[0] !== sampleText) {
-      setCurrentBoard(() => ({
-        [sampleText]: boardsData.boards[`${sampleText}`]
-      }))
-    }
-
-    if (hamburger === true) {
-      document.querySelector('#hamburger-wrapper').classList.remove('active')
-      document.querySelector('#hamburger').classList.remove('active')
-      document.querySelector('.boards-ul').classList.remove('active')
-      document.querySelector('#nav-container').classList.remove('active')
-      document.querySelector('#boards-nav').classList.remove('active')
-      setHamburger(false)
-    }
-  }
-
   useEffect(() => {
     if (sampleText) {
-      setCurrentBoard(() => ({ [sampleText]: boardsData.boards[`${sampleText}`] }))
+      setCurrentBoard(() => ({ [sampleText]: pleaseWork.boards[`${sampleText}`] }))
     }
     abortChanges()
-  }, [boardsData])
+  }, [pleaseWork])
 
   const [clicked, setClicked] = React.useState()
 
@@ -284,8 +152,8 @@ export default function App(props) {
       {clicked && <TasksEdits taskItem={clicked} handleAbort={abortChanges} pushChanges={handleChanges} deleteItem={deleteTask} />}
       <nav id="boards-nav">
         <div id="nav-container">
-          <Nav boards={boardsData.boards} handleClick={currentBoardFunction} />
-          <Boards handleEvent={addBoard} />
+          <Nav boards={pleaseWork.boards} />
+          <Boards />
         </div>
         <Footer />
       </nav>
@@ -296,11 +164,11 @@ export default function App(props) {
           <span className="bar"></span>
         </div>
       </div>
-      {hamburger === false && currentBoard && <main id="tasks-display-container">
+      {hamburger === false && pleaseWork.currentBoard && <main id="tasks-display-container">
         <Tasks
-          displayBoard={currentBoard}
-          addTask={addTask}
-          addTaskList={addTaskList}
+          // displayBoard={pleaseWork.currentBoard}
+          // addTask={addTask}
+          // addTaskList={addTaskList}
           handleCurrentTask={flipClickState}
           pushNewTaskData={pushNewTaskData}
           deleteItem={deleteTaskList}
