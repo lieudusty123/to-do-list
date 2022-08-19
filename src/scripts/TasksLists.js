@@ -69,7 +69,6 @@ export default function TasksLists(props) {
     let dragStartIndex;
     let dragStartList;
     function dragStart(event) {
-        console.log('start')
         if (event.target.className === "tasks-li-div") {
             dragStartIndex = +event.target.parentElement.id + 1;
             dragStartList = event.target.parentElement.parentElement.parentElement.children[0].children[0].textContent
@@ -119,7 +118,6 @@ export default function TasksLists(props) {
     }
     let dragEndList;
     function dragDrop() {
-        console.log('drop')
         if (dragEndList === dragStartList && Object.keys(props.currentTaskList)[0] === dragEndList) {
             let firstItem = props.currentTaskList[dragEndList][dragStartIndex]
             let lastItem = props.currentTaskList[dragEndList][dragEndIndex]
