@@ -69,6 +69,7 @@ export default function TasksLists(props) {
     let dragStartIndex;
     let dragStartList;
     function dragStart(event) {
+        console.log('start')
         if (event.target.className === "tasks-li-div") {
             dragStartIndex = +event.target.parentElement.id + 1;
             dragStartList = event.target.parentElement.parentElement.parentElement.children[0].children[0].textContent
@@ -98,7 +99,7 @@ export default function TasksLists(props) {
             dragEndIndex = +event.target.id + 1;
             dragEndList = event.target.parentElement.parentElement.children[0].children[0].textContent
         }
-
+        event.preventDefault()
     }
     function touchDrop(event) {
         let please = document.elementFromPoint(event.changedTouches[0].pageX, event.changedTouches[0].pageY)
@@ -118,8 +119,8 @@ export default function TasksLists(props) {
     }
     let dragEndList;
     function dragDrop() {
+        console.log('drop')
         if (dragEndList === dragStartList && Object.keys(props.currentTaskList)[0] === dragEndList) {
-
             let firstItem = props.currentTaskList[dragEndList][dragStartIndex]
             let lastItem = props.currentTaskList[dragEndList][dragEndIndex]
             passedValue = {
