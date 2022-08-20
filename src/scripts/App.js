@@ -71,22 +71,6 @@ export default function App(props) {
 
   }
 
-  function pushNewTaskData(obj) {
-    let newBoardData = {
-      [Object.keys(currentBoard)[0]]: {
-        ...currentBoard[Object.keys(currentBoard)[0]],
-        ...obj
-      }
-    }
-    setCurrentBoard(newBoardData)
-    setBoardsData(oldData => ({
-      boards: {
-        ...oldData.boards,
-        ...newBoardData
-      }
-    }))
-  }
-
   function abortChanges() {
     setClicked(false)
   }
@@ -138,14 +122,6 @@ export default function App(props) {
     }))
     abortChanges()
   }
-  function deleteTaskList(event) {
-    let newData = { ...boardsData }
-    let passedListId = event.target.parentElement.children[0].textContent
-    delete newData.boards[Object.keys(currentBoard)][passedListId]
-    setBoardsData(({
-      ...newData
-    }))
-  }
 
   return (
     <div id="react-container">
@@ -166,12 +142,7 @@ export default function App(props) {
       </div>
       {hamburger === false && pleaseWork.currentBoard && <main id="tasks-display-container">
         <Tasks
-          // displayBoard={pleaseWork.currentBoard}
-          // addTask={addTask}
-          // addTaskList={addTaskList}
           handleCurrentTask={flipClickState}
-          pushNewTaskData={pushNewTaskData}
-          deleteItem={deleteTaskList}
         />
         <Info />
 

@@ -1,17 +1,18 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import trashIcon from "../sprites/trash.png"
-import { addTaskSlice, reOrderSlice } from "./Slice/toDoSlice";
+import { addTaskSlice, reOrderSlice, deleteTaskListSlice } from "./Slice/toDoSlice";
+
 
 export default function TasksLists(props) {
     const [taskValue, setTaskValue] = React.useState({ text: "" })
-    let passedValue = {}
-    // console.log('props.currentTaskList', props.currentTaskList)
+    const passedData = props.currentTaskList
     const dispatch = useDispatch()
 
-    let mappedTasks = Object.keys(props.currentTaskList)
+
+    let mappedTasks = Object.keys(passedData)
         .map((taskUl, index) => {
-            let list = Object.keys(props.currentTaskList[taskUl]).map((i, index) =>
+            let list = Object.keys(passedData[taskUl]).map((i, index) =>
                 <li
                     key={index}
                     id={index}
@@ -26,9 +27,9 @@ export default function TasksLists(props) {
                     draggable={true}
                 >
                     <div className="tasks-li-div">
-                        {<div className="tasks-li-color" style={props.currentTaskList[taskUl][i].color ? { backgroundColor: `${props.currentTaskList[taskUl][i].color}` } : { backgroundColor: `transparent` }}></div>}
-                        <div className="tasks-li-div-text">{props.currentTaskList[taskUl][i].text}</div>
-                        {props.currentTaskList[taskUl][i].date && <div className="tasks-li-div-date">{props.currentTaskList[taskUl][i].date}</div>}
+                        {<div className="tasks-li-color" style={passedData[taskUl][i].color ? { backgroundColor: `${passedData[taskUl][i].color}` } : { backgroundColor: `transparent` }}></div>}
+                        <div className="tasks-li-div-text">{passedData[taskUl][i].text}</div>
+                        {passedData[taskUl][i].date && <div className="tasks-li-div-date">{passedData[taskUl][i].date}</div>}
                     </div>
                 </li>
             )
@@ -40,7 +41,7 @@ export default function TasksLists(props) {
                             alt="trash"
                             className="trash-icon"
                             src={trashIcon}
-                            onClick={(event) => props.deleteItem(event)}
+                            onClick={removeTaskList}
                         />
                     </div>
                     <div className="list-body">
@@ -61,13 +62,18 @@ export default function TasksLists(props) {
         })
 
 
+
+    function removeTaskList(event) {
+        let textTarget = event.target.parentElement.parentElement.id
+        dispatch(deleteTaskListSlice(textTarget))
+    }
     function onNewTaskChange(event) {
         setTaskValue({ text: `${event.target.value}` })
     }
     function newTask(event) {
         event.preventDefault()
         dispatch(addTaskSlice({
-            currentList: props.currentTaskList,
+            currentList: event.target.parentElement.parentElement.parentElement.id,
             text: taskValue.text
         }))
         event.target.parentElement.children[0].value = ''
@@ -77,15 +83,15 @@ export default function TasksLists(props) {
     let dragStartList;
     function dragStart(event) {
         if (event.target.className === "tasks-li-div") {
-            dragStartIndex = +event.target.parentElement.id + 1;
+            dragStartIndex = +event.target.parentElement.id;
             dragStartList = event.target.parentElement.parentElement.parentElement.children[0].children[0].textContent
         }
         else if (event.target.className === "tasks-li-color" || event.target.className === "tasks-li-div-text" || event.target.className === "tasks-li-div-date") {
-            dragStartIndex = +event.target.parentElement.parentElement.id + 1;
+            dragStartIndex = +event.target.parentElement.parentElement.id;
             dragStartList = event.target.parentElement.parentElement.parentElement.parentElement.children[0].children[0].textContent
         }
         else {
-            dragStartIndex = +event.target.id + 1;
+            dragStartIndex = +event.target.id;
             dragStartList = event.target.parentElement.parentElement.children[0].children[0].textContent
         }
 
@@ -94,55 +100,63 @@ export default function TasksLists(props) {
     let dragEndIndex;
     function dragOver(event) {
         if (event.target.className === "tasks-li-div") {
-            dragEndIndex = +event.target.parentElement.id + 1;
+            dragEndIndex = +event.target.parentElement.id;
             dragEndList = event.target.parentElement.parentElement.parentElement.children[0].children[0].textContent
+            dragEndListIndex = event.target.parentElement.parentElement.parentElement.id
         }
         else if (event.target.className === "tasks-li-color" || event.target.className === "tasks-li-div-text" || event.target.className === "tasks-li-div-date") {
-            dragEndIndex = +event.target.parentElement.parentElement.id + 1;
+            dragEndIndex = +event.target.parentElement.parentElement.id;
             dragEndList = event.target.parentElement.parentElement.parentElement.parentElement.children[0].children[0].textContent
+            dragEndListIndex = event.target.parentElement.parentElement.parentElement.parentElement.id
         }
         else {
-            dragEndIndex = +event.target.id + 1;
+            dragEndIndex = +event.target.id;
             dragEndList = event.target.parentElement.parentElement.children[0].children[0].textContent
+            dragEndListIndex = event.target.parentElement.parentElement.id
         }
-
+        event.preventDefault()
     }
     function touchDrop(event) {
         let please = document.elementFromPoint(event.changedTouches[0].pageX, event.changedTouches[0].pageY)
         if (please.className === "tasks-li-div") {
-            dragEndIndex = +please.parentElement.id + 1;
+            dragEndIndex = +please.parentElement.id;
             dragEndList = please.parentElement.parentElement.parentElement.children[0].children[0].textContent
+            dragEndListIndex = please.parentElement.parentElement.parentElement.id
         }
         else if (please.className === "tasks-li-color" || please.className === "tasks-li-div-text" || please.className === "tasks-li-div-date") {
-            dragEndIndex = +please.parentElement.parentElement.id + 1;
+            dragEndIndex = +please.parentElement.parentElement.id;
             dragEndList = please.parentElement.parentElement.parentElement.parentElement.children[0].children[0].textContent
+            dragEndListIndex = please.parentElement.parentElement.parentElement.parentElement.id
         }
         else {
-            dragEndIndex = +please.id + 1;
+            dragEndIndex = +please.id;
             dragEndList = please.parentElement.parentElement.children[0].children[0].textContent
+            dragEndListIndex = please.parentElement.parentElement.id
         }
         dragDrop()
     }
     let dragEndList;
-    function dragDrop() {
-        if (dragEndList === dragStartList && Object.keys(props.currentTaskList)[0] === dragEndList) {
-
-            let firstItem = props.currentTaskList[dragEndList][dragStartIndex]
-            let lastItem = props.currentTaskList[dragEndList][dragEndIndex]
-            passedValue = {
-                [dragEndList]: {
-                    ...props.currentTaskList[dragEndList],
-                    [dragStartIndex]: lastItem,
-                    [dragEndIndex]: firstItem
-                }
-            }
-            return dispatch(reOrderSlice(passedValue))
+    let dragEndListIndex;
+    function dragDrop(event) {
+        console.log(dragEndListIndex)
+        if (dragEndList === dragStartList && Object.keys(passedData)[0] === dragEndList) {
+            let firstItem = passedData[dragEndList][dragStartIndex]
+            let lastItem = passedData[dragEndList][dragEndIndex]
+            return dispatch(reOrderSlice({
+                listId: dragEndListIndex,
+                listName: dragEndList,
+                first: firstItem,
+                last: lastItem,
+                firstIndex: dragStartIndex,
+                lastIndex: dragEndIndex
+            }))
         }
         else {
             dragEndIndex = undefined;
             dragStartIndex = undefined;
             dragStartList = undefined;
             dragEndList = undefined;
+            dragEndListIndex = undefined;
         }
     }
 

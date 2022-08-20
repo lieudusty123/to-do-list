@@ -8,7 +8,6 @@ export default function Tasks(props) {
     const dispatch = useDispatch()
     const pleaseWork = useSelector(state => state.toDo)
     const currentBoardObj = pleaseWork.boards[pleaseWork.currentBoard]
-
     function onTaskListChange(event) {
         setTextInput(event.target.value)
     }
@@ -19,21 +18,20 @@ export default function Tasks(props) {
 
     let mappedItems = []
     let index = 0
-    for (const key in currentBoardObj) {
-        let currentObj = { [key]: currentBoardObj[key] }
-        mappedItems.push(
-            <TasksLists
-                addTask={(event) => props.addTask(event)}
-                deleteItem={(event) => props.deleteItem(event)}
-                key={key}
-                idi={index}
-                pushNewTaskData={(data) => props.pushNewTaskData(data)}
-                currentTaskList={currentObj}
-                handleCurrentTask={props.handleCurrentTask} />)
+    currentBoardObj.forEach(element => {
+        for (const key in element) {
+            let currentObj = { [key]: element[key] }
+            mappedItems.push(
+                <TasksLists
+                    key={key}
+                    idi={index}
+                    currentTaskList={currentObj}
+                    handleCurrentTask={props.handleCurrentTask}
+                />)
+            index++
+        }
+    })
 
-
-        index++
-    }
     function blurElement(event) {
         event.target.children[0].blur()
     }
