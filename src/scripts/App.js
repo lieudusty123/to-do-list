@@ -32,6 +32,9 @@ export default function App(props) {
     }
   }
 
+  function removeHamburger() {
+    setHamburger(false)
+  }
 
   return (
     <div id="react-container">
@@ -39,7 +42,7 @@ export default function App(props) {
       <nav id="boards-nav">
 
         <div id="nav-container">
-          <Nav boards={mainData.boards} />
+          <Nav boards={mainData.boards} hamburger={hamburger} remove={removeHamburger} />
           <Boards />
         </div>
         <Footer />

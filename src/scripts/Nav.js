@@ -13,20 +13,20 @@ export default function Nav(props) {
             dispatch(currentBoardSlice(sampleText))
         }
 
-        // if (props.hamburger === true) {
-        //     document.querySelector('#hamburger-wrapper').classList.remove('active')
-        //     document.querySelector('#hamburger').classList.remove('active')
-        //     document.querySelector('.boards-ul').classList.remove('active')
-        //     document.querySelector('#nav-container').classList.remove('active')
-        //     document.querySelector('#boards-nav').classList.remove('active')
-        //     setHamburger(false)
-        // }
+        if (props.hamburger === true) {
+            document.querySelector('#hamburger-wrapper').classList.remove('active')
+            document.querySelector('#hamburger').classList.remove('active')
+            document.querySelector('.boards-ul').classList.remove('active')
+            document.querySelector('#nav-container').classList.remove('active')
+            document.querySelector('#boards-nav').classList.remove('active')
+            // setHamburger(false)
+        }
     }
 
     let mappedBoards = Object.keys(props.boards).map((data, key) =>
         <li className="boards-li" key={key}>
             <button
-                onClick={currentBoardFunction}
+                onClick={(event) => currentBoardFunction(event) & props.remove(event)}
             >{data}</button>
         </li>
     )
