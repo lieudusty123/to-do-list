@@ -1,4 +1,4 @@
-import React, { useEffect } from "react"
+import React from "react"
 import Boards from "./Boards"
 import Footer from "./Footer"
 import Nav from "./Nav"
@@ -7,73 +7,10 @@ import TasksEdits from "./TasksEdits"
 import Info from "./Info"
 import { useSelector } from 'react-redux'
 
-let sampleText = ''
 export default function App(props) {
-  const pleaseWork = useSelector(state => state.toDo)
-  let [currentBoard, setCurrentBoard] = React.useState()
+  const mainData = useSelector(state => state.toDo)
+  const editMode = useSelector(state => state.editsBool)
   const [hamburger, setHamburger] = React.useState(false)
-
-  const [boardsData, setBoardsData] = React.useState({
-    boards: {
-
-    }
-  })
-
-  useEffect(() => {
-    if (sampleText) {
-      setCurrentBoard(() => ({ [sampleText]: pleaseWork.boards[`${sampleText}`] }))
-    }
-    abortChanges()
-  }, [pleaseWork])
-
-  const [clicked, setClicked] = React.useState()
-
-  let [currentList, setCurrentList] = React.useState()
-  function flipClickState(event) {
-    let objectKeys = {}
-    for (const key in currentBoard) {
-      objectKeys = currentBoard[key]
-    }
-    let closestLi = event.target.closest('li')
-    let closestUl = event.target.closest('ul')
-    let taskListText = closestUl.children[0].textContent
-    let taskListItemID = +closestLi.id + 1
-
-
-    setClicked(() => ({ [closestLi.id]: objectKeys[taskListText][taskListItemID] }))
-    setCurrentList(taskListText)
-  }
-
-  function handleChanges(pushChangesData) {
-
-    let insertedValues = {}
-    for (const key in pushChangesData) {
-      insertedValues = pushChangesData[key]
-    }
-
-    setBoardsData(oldBoardData => ({
-      boards: {
-        ...oldBoardData.boards,
-        [Object.keys(currentBoard)]: {
-          ...currentBoard[Object.keys(currentBoard)],
-          [currentList]: {
-            ...currentBoard[Object.keys(currentBoard)][currentList],
-            [+Object.keys(pushChangesData)[0] + 1]: {
-              text: insertedValues.text,
-              color: insertedValues.color,
-              date: insertedValues.date,
-              desc: insertedValues.desc
-            }
-          }
-        }
-      }
-    }))
-
-  }
-
-  function abortChanges() {
-    setClicked(false)
-  }
 
   function handleHamburgerClick() {
     if (window.innerWidth >= 600) {
@@ -95,40 +32,14 @@ export default function App(props) {
     }
   }
 
-  function deleteTask() {
-    let newData = { ...boardsData }
-    delete newData.boards[Object.keys(currentBoard)][currentList][+Object.keys(clicked) + 1]
-    let newInnerData = {}
-    let index = 0;
-    for (const key in newData.boards[Object.keys(currentBoard)][currentList]) {
-      index += 1
-      newInnerData = {
-        ...newInnerData,
-        [index]: {
-          ...newData.boards[Object.keys(currentBoard)][currentList][key]
-        }
-      }
-    }
-    setBoardsData(({
-      boards: {
-        ...newData.boards,
-        [Object.keys(currentBoard)]: {
-          ...currentBoard[Object.keys(currentBoard)],
-          [currentList]: {
-            ...newInnerData
-          }
-        }
-      }
-    }))
-    abortChanges()
-  }
 
   return (
     <div id="react-container">
-      {clicked && <TasksEdits taskItem={clicked} handleAbort={abortChanges} pushChanges={handleChanges} deleteItem={deleteTask} />}
+      {editMode.clicked && <TasksEdits />}
       <nav id="boards-nav">
+
         <div id="nav-container">
-          <Nav boards={pleaseWork.boards} />
+          <Nav boards={mainData.boards} />
           <Boards />
         </div>
         <Footer />
@@ -140,10 +51,8 @@ export default function App(props) {
           <span className="bar"></span>
         </div>
       </div>
-      {hamburger === false && pleaseWork.currentBoard && <main id="tasks-display-container">
-        <Tasks
-          handleCurrentTask={flipClickState}
-        />
+      {hamburger === false && mainData.currentBoard && <main id="tasks-display-container">
+        <Tasks />
         <Info />
 
       </main>}

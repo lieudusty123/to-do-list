@@ -1,11 +1,13 @@
 import React from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import trashIcon from "../sprites/trash.png"
+import { flipState, setTarget } from "./Slice/clickedSlice";
 import { addTaskSlice, reOrderSlice, deleteTaskListSlice } from "./Slice/toDoSlice";
 
 
 export default function TasksLists(props) {
     const [taskValue, setTaskValue] = React.useState({ text: "" })
+    const mainData = useSelector(state => state.toDo)
     const passedData = props.currentTaskList
     const dispatch = useDispatch()
 
@@ -17,7 +19,7 @@ export default function TasksLists(props) {
                     key={index}
                     id={index}
                     className="tasks-li draggable"
-                    onClick={props.handleCurrentTask}
+                    onClick={activateEditMode}
                     onDrop={dragDrop}
                     onDragStart={dragStart}
                     onDragOver={dragOver}
@@ -61,15 +63,27 @@ export default function TasksLists(props) {
             )
         })
 
+    function activateEditMode(event) {
+        let closestUl = event.target.closest('ul')
+        let closestLi = event.target.closest('li')
+        let targetUlText = closestUl.id
+        let targetUlObj = mainData.boards[mainData.currentBoard][closestUl.id]
+        let targetLiObj = mainData.boards[mainData.currentBoard][closestUl.id][Object.keys(targetUlObj)[0]][closestLi.id]
+        let targetLiText = closestLi.id
+        dispatch(flipState())
+        dispatch(setTarget({ targetUlText: targetUlText, targetUlObj, targetLi: targetLiText, targetLiObj }))
+    }
 
 
     function removeTaskList(event) {
         let textTarget = event.target.parentElement.parentElement.id
         dispatch(deleteTaskListSlice(textTarget))
     }
+
     function onNewTaskChange(event) {
         setTaskValue({ text: `${event.target.value}` })
     }
+
     function newTask(event) {
         event.preventDefault()
         dispatch(addTaskSlice({
@@ -79,8 +93,16 @@ export default function TasksLists(props) {
         event.target.parentElement.children[0].value = ''
         setTaskValue({ text: "" })
     }
+
+    // --------------------------
+    // Drag Section
+    // --------------------------
     let dragStartIndex;
     let dragStartList;
+    let dragEndIndex;
+    let dragEndList;
+    let dragEndListIndex;
+
     function dragStart(event) {
         if (event.target.className === "tasks-li-div") {
             dragStartIndex = +event.target.parentElement.id;
@@ -97,7 +119,6 @@ export default function TasksLists(props) {
 
     }
 
-    let dragEndIndex;
     function dragOver(event) {
         if (event.target.className === "tasks-li-div") {
             dragEndIndex = +event.target.parentElement.id;
@@ -135,10 +156,7 @@ export default function TasksLists(props) {
         }
         dragDrop()
     }
-    let dragEndList;
-    let dragEndListIndex;
     function dragDrop(event) {
-        console.log(dragEndListIndex)
         if (dragEndList === dragStartList && Object.keys(passedData)[0] === dragEndList) {
             let firstItem = passedData[dragEndList][dragStartIndex]
             let lastItem = passedData[dragEndList][dragEndIndex]
@@ -159,6 +177,9 @@ export default function TasksLists(props) {
             dragEndListIndex = undefined;
         }
     }
+    // --------------------------
+    // Drag Section
+    // --------------------------
 
     return (
         [mappedTasks]

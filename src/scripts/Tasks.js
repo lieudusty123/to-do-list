@@ -3,11 +3,11 @@ import TasksLists from "./TasksLists";
 import { addTaskListSlice } from "./Slice/toDoSlice";
 import { useSelector, useDispatch } from "react-redux";
 
-export default function Tasks(props) {
+export default function Tasks() {
     const [textInput, setTextInput] = useState('')
     const dispatch = useDispatch()
-    const pleaseWork = useSelector(state => state.toDo)
-    const currentBoardObj = pleaseWork.boards[pleaseWork.currentBoard]
+    const mainDara = useSelector(state => state.toDo)
+    const currentBoardObj = mainDara.boards[mainDara.currentBoard]
     function onTaskListChange(event) {
         setTextInput(event.target.value)
     }
@@ -26,7 +26,6 @@ export default function Tasks(props) {
                     key={key}
                     idi={index}
                     currentTaskList={currentObj}
-                    handleCurrentTask={props.handleCurrentTask}
                 />)
             index++
         }

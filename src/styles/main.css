@@ -517,10 +517,15 @@ html {
   border: none;
   width: 100%;
   height: 2rem;
+  -webkit-transition: all 0.1s;
+  transition: all 0.1s;
 }
 
 #task-container ul .list-footer .task-list-form button:hover {
+  -webkit-transition: all 0.1s;
+  transition: all 0.1s;
   cursor: pointer;
+  background-color: #5a53c1;
 }
 
 #task-container .new-column {

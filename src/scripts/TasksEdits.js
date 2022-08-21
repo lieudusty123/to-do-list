@@ -1,9 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { applyChanges, deleteTaskSlice } from "./Slice/toDoSlice";
+import { resetState } from "./Slice/clickedSlice";
 
 export default function TasksEdits(props) {
-
-    const [changeData, setChangeData] = React.useState(props.taskItem[Object.keys(props.taskItem)[0]])
-    let pushChangesData = { [Object.keys(props.taskItem)[0]]: changeData }
+    const inputData = useSelector(state => state.editsBool)
+    const targetLiObj = inputData.target.targetLiObj
+    const [newData, setNewData] = useState(targetLiObj)
+    const dispatch = useDispatch()
     function getDate() {
         const date = new Date();
         const year = date.getFullYear();
@@ -15,38 +19,46 @@ export default function TasksEdits(props) {
     const joined = getDate()
 
     function saveInput(event) {
-        setChangeData(oldData => ({
+        setNewData(oldData => ({
             ...oldData,
             [event.target.name]: event.target.value
         }))
     }
-
     function handleSubmit(event) {
         event.preventDefault()
+        dispatch(applyChanges({
+            targetLiText: inputData.target.targetLi,
+            targetUlText: inputData.target.targetUlText,
+            targetUlObj: inputData.target.targetUlObj,
+            data: newData
+        }))
+        dispatch(resetState())
     }
-
+    function deleteItem() {
+        dispatch(deleteTaskSlice(inputData.target))
+        dispatch(resetState())
+    }
     let mappedItems = (
-        <form onSubmit={(event) => props.pushChanges(pushChangesData) & handleSubmit(event)}>
+        <form onSubmit={(event) => handleSubmit(event)}>
             <div className="edit-task-form-header">
-                <h1>{props.taskItem[Object.keys(props.taskItem)[0]].text}</h1>
-                <button type="button" id="x-button" onClick={props.handleAbort}>X</button>
+                <h1>{newData.text}</h1>
+                <button type="button" id="x-button" onClick={() => dispatch(resetState())}>X</button>
             </div>
 
             <div>Title</div>
-            <input type="text" name="text" value={changeData.text} onChange={saveInput}></input>
+            <input type="text" name="text" value={newData.text} onChange={saveInput}></input>
 
             <div>description</div>
-            {<textarea type="desc" name="desc" value={changeData.desc ? changeData.desc : ''} onChange={saveInput}></textarea>}
+            {<textarea type="desc" name="desc" value={newData.desc ? newData.desc : ''} onChange={saveInput}></textarea>}
 
             <div>deadline</div>
-            {<input type="date" name="date" value={changeData.date ? changeData.date : joined} min={joined} onChange={saveInput}></input>}
+            {<input type="date" name="date" value={newData.date ? newData.date : joined} min={joined} onChange={saveInput}></input>}
 
             <div>color</div>
-            {<input type="color" name="color" id="color-input" value={changeData.color ? changeData.color : "#112233"} onChange={saveInput}></input>}
+            {<input type="color" name="color" id="color-input" value={newData.color ? newData.color : "#112233"} onChange={saveInput}></input>}
 
-            {/* {props.taskItem.desc ? <textarea type="text" value={props.taskItem.desc}></textarea> : <textarea type="text" placeholder="desc"></textarea>} */}
             <button>Submit</button>
-            <button type="button" onClick={props.deleteItem}>Delete</button>
+            <button type="button" onClick={deleteItem}>Delete</button>
         </form>
     )
 

@@ -1,4 +1,4 @@
-import { createSlice, current } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
     boards: {
@@ -28,7 +28,6 @@ const toDoSlice = createSlice({
             target.push({
                 text: action.payload.text
             })
-            console.log(current(state.boards))
         },
         reOrderSlice(state, action) {
             let target = state.boards[state.currentBoard][action.payload.listId][action.payload.listName]
@@ -39,10 +38,20 @@ const toDoSlice = createSlice({
         },
         deleteTaskListSlice(state, action) {
             state.boards[state.currentBoard].splice(action.payload, 1)
+        },
+        deleteTaskSlice(state, action) {
+            state.boards[state.currentBoard][action.payload.targetUlText][Object.keys(action.payload.targetUlObj)[0]]
+                .splice(+action.payload.targetLi, 1)
+        },
+        applyChanges(state, action) {
+            state.boards[state.currentBoard]
+            [action.payload.targetUlText]
+            [Object.keys(action.payload.targetUlObj)[0]]
+            [action.payload.targetLiText] = action.payload.data
         }
     }
 })
 
-export const { addBoardSlice, addTaskListSlice, currentBoardSlice, addTaskSlice, reOrderSlice, deleteTaskListSlice } = toDoSlice.actions
+export const { addBoardSlice, addTaskListSlice, currentBoardSlice, addTaskSlice, reOrderSlice, deleteTaskListSlice, deleteTaskSlice, applyChanges } = toDoSlice.actions
 
 export default toDoSlice.reducer
