@@ -2,4 +2,4 @@
 
 A To-Do list web application.
 
-Built with HTML, CSS, SCSS, JS, ReactJS
+Built with HTML, CSS, SCSS, JS, ReactJS, Redux
